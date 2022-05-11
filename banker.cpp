@@ -96,7 +96,8 @@ bool is_safe()
 		Finish[i] = FALSE;
 	}
 	int i = 0, j = 0, k = 0;
-	int temp = 0;
+	// int temp = 0;
+	int failness = 0; //自上一个满足的进程起，接下来的进程不满足的次数
 	while (allFinish != ProcessNum) //当进程还没全部结束时
 	{
 		j = 0;
@@ -106,6 +107,7 @@ bool is_safe()
 			{
 				if (need[i][j] > work[j])
 				{
+					failness++; //不满足次数加1
 					break;
 				}
 			}
@@ -119,15 +121,17 @@ bool is_safe()
 				work[k] += allocation[i][k];
 			}
 			safeSeries[allFinish++] = i;
+			failness = 0; //当前进程满足，归0
 		}
 		i++;
 		if (i >= ProcessNum)
 		{
 			i = i % ProcessNum;
-			if (temp == allFinish)
+			// if (temp == allFinish)
+			if (failness == ProcessNum - allFinish) //剩余进程都不满足，系统不安全，退出
 				break;
 		}
-		temp = allFinish;
+		// temp = allFinish;
 	}
 
 	if (allFinish == ProcessNum)
