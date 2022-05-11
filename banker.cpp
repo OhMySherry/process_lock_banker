@@ -124,13 +124,11 @@ bool is_safe()
 			failness = 0; //当前进程满足，归0
 		}
 		i++;
-		if (i >= ProcessNum)
-		{
-			i = i % ProcessNum;
-			// if (temp == allFinish)
-			if (failness == ProcessNum - allFinish) //剩余进程都不满足，系统不安全，退出
-				break;
-		}
+		// if (i >= ProcessNum)
+		i = i % ProcessNum;
+		// if (temp == allFinish)
+		if (failness == ProcessNum - allFinish) //剩余进程都不满足，系统不安全，退出
+			break;
 		// temp = allFinish;
 	}
 
